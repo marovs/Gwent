@@ -6,7 +6,7 @@ using UnityEngine;
 public class DragCards : MonoBehaviour
 {
 
-    public GameObject Canvas;
+    public GameObject canvas;
     private bool _isDragging = false;
     private bool _isDropable = false;
     private GameObject _dropZone;
@@ -15,17 +15,17 @@ public class DragCards : MonoBehaviour
 
     private void Awake()
     {
-        Canvas = GameObject.Find("MainCanvas");
+        canvas = GameObject.Find("MainCanvas");
     }
     
     // Update is called once per frame
     void Update()
     {
         if (_isDragging)
-        {
+        { // TODO: if player's turn
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(worldPoint.x, worldPoint.y, 0);
-            transform.SetParent(Canvas.transform, true);
+            transform.SetParent(canvas.transform, true);
         }
     }
 
@@ -41,7 +41,7 @@ public class DragCards : MonoBehaviour
         _dropZone = null;
     }
 
-    public void BeginDrag()
+    public void BeginDrag() // TODO: Disallow pickup of played cards
     {
         _startParent = transform.parent.gameObject;
         _startPosition = transform.position;
@@ -54,6 +54,7 @@ public class DragCards : MonoBehaviour
         if (_isDropable)
         {
             transform.SetParent(_dropZone.transform, false);
+            GameModel.Instance.SetOpponentTurn();
         }
         else
         {
