@@ -17,9 +17,9 @@ TagManager:
   - Melee
   - Ranged
   - Siege
-  - 
-  - 
-  - 
+  - MeleeLane
+  - RangedLane
+  - SiegeLane
   - 
   - 
   - 
