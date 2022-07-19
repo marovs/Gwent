@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2517acae72e56b54e900bd0be3b3df7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &897333091234493939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a479614b1229154dbc4c6638918448d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &294970864601926600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbea3260205e44419062f1e196555ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer: Siege
+  lane: Siege
 --- !u!114 &153977403627197363
 MonoBehaviour:
   m_ObjectHideFlags: 0
