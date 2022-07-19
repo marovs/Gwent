@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,11 @@ using UnityEngine;
 public class CardAttributes : MonoBehaviour
 {
 
-    public string layer;
+    public string lane;
     
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        if (layer != null) gameObject.layer = LayerMask.NameToLayer(layer);
+        if (lane != null) gameObject.layer = LayerMask.NameToLayer(lane);
     }
 
     // Update is called once per frame
