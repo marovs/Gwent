@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbea3260205e44419062f1e196555ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
   lane: Ranged
 --- !u!114 &153977403627197363
 MonoBehaviour:
