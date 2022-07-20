@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameModel : MonoBehaviour
@@ -11,12 +13,27 @@ public class GameModel : MonoBehaviour
     public GameObject[] cards;
     public GameObject handArea;
     public GameObject[] opponentLanes;
+    public GameObject turnTextObject;
 
     private Dictionary<string, GameObject> _opponentLanesDictionary;
     private List<GameObject> _playerHand;
     private List<GameObject> _opponentHand;
-    private bool _playerTurn = true; // TODO: Make property, get, set only to false outside of class
+    private GameObject _playedPlayerCard;
+    private bool _playerTurn = true;
+    public bool PlayerTurn
+    {
+        get => _playerTurn;
+        set
+        {
+            if (value) throw new ArgumentException("Cannot set to true");
+            _playerTurn = false;
+        } 
+        
+    }
 
+    private bool _opponentTurn = false;
+    private TextMeshProUGUI _turnText;
+    
     public static GameModel Instance;
     
     void Start()
@@ -33,6 +50,8 @@ public class GameModel : MonoBehaviour
             { "Siege", opponentLanes[2] }
         };
 
+        _turnText = turnTextObject.GetComponent<TextMeshProUGUI>();
+
         StartCoroutine(DrawCards());
     }
 
@@ -43,7 +62,6 @@ public class GameModel : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
 
             _opponentHand.Add(GetRandomCard());
-            // _opponentHand[i] = GetRandomCard();
 
             GameObject playerCard = GetRandomCard();
             _playerHand.Add(playerCard);
@@ -58,17 +76,38 @@ public class GameModel : MonoBehaviour
 
     void Update()
     {
-        // TODO: Play opponent card when not player's turn.
-        // TODO: Turn logic
+        if (PlayerTurn)
+        {
+            _turnText.text = "Player's turn";
+        }
+        else if (!_opponentTurn)
+        {
+            _opponentTurn = true;
+            _turnText.text = "Opponent's turn";
+            StartCoroutine(PlayOpponentCard());
+        }
     }
 
-    public void SetOpponentTurn()
+    public bool RemovePlayedCard(GameObject cardToRemove)
     {
-        _playerTurn = false;
+        CardAttributes toRemoveAttributes = cardToRemove.GetComponent<CardAttributes>();
+
+        foreach (GameObject card in _playerHand)
+        {
+            CardAttributes attributes = card.GetComponent<CardAttributes>();
+            if (toRemoveAttributes.Equals(attributes))
+            {
+                return _playerHand.Remove(card);
+            }
+        }
+
+        return false;
     }
 
-    public void PlayOpponentCard()
+    public IEnumerator PlayOpponentCard()
     {
+        yield return new WaitForSeconds(1.5f);
+
         if (_opponentHand.Count >= 1)
         {
             int index = Random.Range(0, _opponentHand.Count);
@@ -77,5 +116,7 @@ public class GameModel : MonoBehaviour
             card.transform.SetParent(lane.transform, false);
             _opponentHand.RemoveAt(index);
         }
+        _playerTurn = true;
+        _opponentTurn = false;
     }
 }
