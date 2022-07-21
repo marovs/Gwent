@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: -3444885697798871636}
   - component: {fileID: 3604675814025497061}
   m_Layer: 6
-  m_Name: CardRanged
+  m_Name: RangedHigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,9 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbea3260205e44419062f1e196555ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
+  id: 5
   lane: Ranged
-  power: 0
+  power: 6
 --- !u!114 &153977403627197363
 MonoBehaviour:
   m_ObjectHideFlags: 0
