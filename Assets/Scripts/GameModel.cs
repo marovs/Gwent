@@ -14,7 +14,9 @@ public class GameModel : MonoBehaviour
     public GameObject handArea;
     public GameObject[] opponentLanes;
     public GameObject turnTextObject;
+    public GameObject[] scoreText;
 
+    private Dictionary<string, GameObject> _scoreTextDictionary;
     private Dictionary<string, GameObject> _opponentLanesDictionary;
     private List<GameObject> _playerHand;
     private List<GameObject> _opponentHand;
@@ -52,6 +54,11 @@ public class GameModel : MonoBehaviour
 
         _turnText = turnTextObject.GetComponent<TextMeshProUGUI>();
 
+        _scoreTextDictionary = new Dictionary<string, GameObject> // TODO: Find good way to organize score texts and corresponding lanes. Perhaps dict with string and pair of lane and score text.
+        {
+            { "PlayerSiege", scoreText[0] }
+        };
+
         StartCoroutine(DrawCards());
     }
 
@@ -74,8 +81,22 @@ public class GameModel : MonoBehaviour
         return cards[Random.Range(0, cards.Length)];
     }
 
-    void Update()
-    {
+    void Update() // TODO: Add round logic
+    { // TODO: Add ability to pass a round
+        
+        // TODO: Get all lanes in a list to calculate score in loop
+        GameObject lane = opponentLanes[0];
+        CardAttributes[] cardAttributesArray = lane.GetComponentsInChildren<CardAttributes>();
+        int score = 0;
+        foreach (CardAttributes attributes in cardAttributesArray)
+        {
+            score += attributes.power;
+        }
+
+        Debug.Log(score);
+        
+        
+
         if (PlayerTurn)
         {
             _turnText.text = "Player's turn";
@@ -104,7 +125,7 @@ public class GameModel : MonoBehaviour
         return false;
     }
 
-    public IEnumerator PlayOpponentCard()
+    private IEnumerator PlayOpponentCard()
     {
         yield return new WaitForSeconds(1.5f);
 
@@ -112,7 +133,7 @@ public class GameModel : MonoBehaviour
         {
             int index = Random.Range(0, _opponentHand.Count);
             GameObject card = Instantiate(_opponentHand[index]);
-            GameObject lane = _opponentLanesDictionary[LayerMask.LayerToName(card.layer)];
+            GameObject lane = _opponentLanesDictionary[LayerMask.LayerToName(card.layer)]; // TODO: Lookup "Opponent" + card.layer
             card.transform.SetParent(lane.transform, false);
             _opponentHand.RemoveAt(index);
         }
