@@ -41,7 +41,7 @@ public class DragCards : MonoBehaviour
         _dropZone = null;
     }
 
-    public void BeginDrag() // TODO: Disallow pickup of played cards
+    public void BeginDrag()
     {
         _isNotAllowedDragging = DragNotAllowed();
         if (_isNotAllowedDragging) return;
